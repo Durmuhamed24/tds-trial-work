@@ -29,4 +29,32 @@ public class DeviceService {
         dto.setUserId(device.getUser() != null ? device.getUser().getId() : null);
         return dto;
     }
+    public DeviceDto getDeviceById(Long id) {
+        return deviceRepository.findById(id)
+                .map(this::convertToDTO)
+                .orElse(null);
+    }
+    public DeviceDto createDevice(DeviceDto deviceDto) {
+        Device device = new Device();
+        device.setDeviceId(deviceDto.getDeviceId());
+        device.setDeviceType(deviceDto.getDeviceType());
+        device.setOS(deviceDto.getOS());
+        device.setMetatag(deviceDto.getMetatag());
+        Device savedDevice = deviceRepository.save(device);
+        return convertToDTO(savedDevice);
+    }
+    public DeviceDto updateDevice(Long id, DeviceDto deviceDto) {
+        return deviceRepository.findById(id)
+                .map(device -> {
+                    device.setDeviceId(deviceDto.getDeviceId());
+                    device.setDeviceType(deviceDto.getDeviceType());
+                    device.setOS(deviceDto.getOS());
+                    device.setMetatag(deviceDto.getMetatag());
+                    return convertToDTO(deviceRepository.save(device));
+                })
+                .orElse(null);
+    }
+    public void deleteDevice(Long id) {
+        deviceRepository.deleteById(id);
+    }
 }

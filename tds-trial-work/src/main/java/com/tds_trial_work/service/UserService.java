@@ -32,4 +32,26 @@ public class UserService {
             user.getActive()
         );
     }
+    public UserDto createUser(UserDto userDto) {
+        User user = new User();
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        user.setActive(userDto.getActive());
+        User savedUser = userRepository.save(user);
+        return convertToDTO(savedUser);
+    }
+    public UserDto updateUser(Long id, UserDto userDto) {
+        return userRepository.findById(id)
+                .map(user -> {
+                    user.setName(userDto.getName());
+                    user.setEmail(userDto.getEmail());
+                    user.setActive(userDto.getActive());
+                    return convertToDTO(userRepository.save(user));
+                })
+                .orElse(null);
+    }
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+    
 }
