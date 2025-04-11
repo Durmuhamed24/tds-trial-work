@@ -1,0 +1,50 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1" author="developer">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="active" type="BOOLEAN"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="developer">
+        <createTable tableName="device">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="device_id" type="VARCHAR(255)"/>
+            <column name="device_type" type="VARCHAR(255)"/>
+            <column name="os" type="VARCHAR(255)"/>
+            <column name="metatag" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT">
+                <constraints foreignKeyName="fk_user" references="user(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="developer">
+        <createTable tableName="esim">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="iccid" type="VARCHAR(255)"/>
+            <column name="imsi" type="VARCHAR(255)"/>
+            <column name="activation_code" type="VARCHAR(255)"/>
+            <column name="eid" type="VARCHAR(255)"/>
+            <column name="device_id" type="BIGINT">
+                <constraints foreignKeyName="fk_device" references="device(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+</databaseChangeLog> 
+
+
