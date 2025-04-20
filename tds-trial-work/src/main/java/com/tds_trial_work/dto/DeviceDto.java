@@ -6,7 +6,20 @@ public class DeviceDto {
     private String deviceType;
     private String OS;
     private String metatag;
-    private Long userId; 
+    private Long userId;
+
+
+    public DeviceDto() {
+    }
+    public DeviceDto(Long id, String deviceId, String deviceType, String OS, String metatag, Long userId) {
+        this.id = id;
+        this.deviceId = deviceId;
+        this.deviceType = deviceType;
+        this.OS = OS;
+        this.metatag = metatag;
+        this.userId = userId;
+    }
+
     public Long getId() {
         return id;
     }
